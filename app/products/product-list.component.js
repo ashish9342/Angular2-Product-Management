@@ -34,14 +34,15 @@ System.register(['angular2/core', './product-filter-pipe', '../shared/star.compo
                     this.imageWidth = 50;
                     this.imageMargin = 2;
                     this.showImage = false;
-                    this.listFilter = "cart";
                     this.products = [];
                 }
                 ProductListComponent.prototype.toggleImage = function () {
                     this.showImage = !this.showImage;
                 };
                 ProductListComponent.prototype.ngOnInit = function () {
-                    this.products = this._productService.getProducts();
+                    var _this = this;
+                    this.products = this._productService.getProducts()
+                        .subscribe(function (products) { return _this.products = products; }, function (error) { return _this.errorMessage = error; });
                 };
                 ProductListComponent.prototype.onRatingClicked = function (message) {
                     this.pageTitle = "Product List: " + message;
